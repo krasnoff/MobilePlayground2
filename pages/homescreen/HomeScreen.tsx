@@ -87,14 +87,14 @@ function HomeScreen({ navigation }: any): JSX.Element {
       <View style={{
         flex: 1,
       }}>
-        {/* <FAB
+        <FAB
           visible={true}
           color="green"
           placement='left'
           onPress={() => navigation.navigate('MainMenu')}
         >
           <Icon name="Plus" height="35" width="35" fill="#ffffff" />
-        </FAB> */}
+        </FAB>
       </View>
     </View>
     </SafeAreaView>

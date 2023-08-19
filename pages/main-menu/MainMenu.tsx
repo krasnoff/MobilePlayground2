@@ -37,7 +37,7 @@ function MainMenu({ navigation }: any): JSX.Element {
     <View style={styles.wrapper}>
       <View style={styles.container}>
         {cols.map((colsItem, i) => (
-          <View style={styles.column}>
+          <View style={styles.column} key={i}>
             {colsItem.map((row, index) => (
               <View key={index} style={styles.row} accessible={true}>
                 <FadeInView style={styles.boxedComponent} delay={(colsItem.length - index) * 500}>

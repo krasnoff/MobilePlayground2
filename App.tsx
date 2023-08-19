@@ -7,7 +7,6 @@
 
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import { useFonts } from 'expo-font';
 import React from 'react';
 import type {PropsWithChildren} from 'react';
 import {
@@ -30,10 +29,6 @@ type SectionProps = PropsWithChildren<{
 const Stack = createNativeStackNavigator();
 
 function LogoTitle() {
-  const [fontsLoaded] = useFonts({
-    'Heebo-Bold': require('./assets/fonts/heebo/Heebo-Bold.ttf'),
-  });
-
   return (
     <View>
       <Text style={{ 

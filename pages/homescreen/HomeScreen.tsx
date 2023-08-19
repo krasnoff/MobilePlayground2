@@ -17,7 +17,6 @@ import {
   View,
   useColorScheme,
 } from 'react-native';
-import { useFonts } from 'expo-font';
 import { Colors } from 'react-native/Libraries/NewAppScreen';
 import { FAB } from '@rneui/themed';
 import Icon from '../../assets/icons/icon'
@@ -25,9 +24,6 @@ import Icon from '../../assets/icons/icon'
 
 function HomeScreen({ navigation }: any): JSX.Element {
   const [text, setText] = useState<string>('');
-  const [fontsLoaded] = useFonts({
-    'Heebo-Regular': require('../../assets/fonts/heebo/Heebo-Regular.ttf'),
-  });
   const isDarkMode = useColorScheme() === 'dark';
 
   const backgroundStyle = {

@@ -76,6 +76,13 @@ function HomeScreen({ navigation }: any): JSX.Element {
             onPress={() => navigation.navigate('Details')}
           />
         </View>
+        <View><Text>&nbsp;</Text></View>
+        <View>
+          <Button
+            title="Go to personal AI assistant"
+            onPress={() => navigation.navigate('PersonalAIAssistant')}
+          />
+        </View>
         <View>
           <Text style={{ fontFamily: 'Heebo-Regular', fontSize: 27 }}>שלום רב פונטים בעברית ץ</Text>
         </View>

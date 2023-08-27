@@ -6,7 +6,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#fff',
-    padding: 24,
+    padding: 24
   },
   headingText: {
     alignSelf: 'center',
@@ -32,10 +32,10 @@ const styles = StyleSheet.create({
 
   bottoms: {
     flexDirection: 'row',
-    alignItems: 'center',
+    alignItems: 'flex-start',
     justifyContent: 'space-between',
     height: 100,
-
+    borderWidth: 0
   },
 
   speak: {
@@ -75,6 +75,8 @@ const styles = StyleSheet.create({
 function PersonalAIAssistant(): JSX.Element {
     const [result, setResult] = useState('');
     const [isLoading, setLoading] = useState(false);
+    const [voiceAvailable, setVoiceAvailable] = useState<1 | 0>(0);
+
     const speechStartHandler = (e: any) => {
       console.log('speechStart successful', e);
     };
@@ -89,7 +91,7 @@ function PersonalAIAssistant(): JSX.Element {
     const startRecording = async () => {
       setLoading(true);
       try {
-        await Voice.start('en-Us');
+        await Voice.start('he-IL');
       } catch (error) {
         console.log('error', error);
       }
@@ -106,21 +108,27 @@ function PersonalAIAssistant(): JSX.Element {
       setResult('');
     };
     useEffect(() => {
-      Voice.onSpeechStart = speechStartHandler;
-      Voice.onSpeechEnd = speechEndHandler;
-      Voice.onSpeechResults = speechResultsHandler;
+      Voice.isAvailable().then((res: 1 | 0) => {
+        if (res) {
+          Voice.onSpeechStart = speechStartHandler;
+          Voice.onSpeechEnd = speechEndHandler;
+          Voice.onSpeechResults = speechResultsHandler;
+        }
+        setVoiceAvailable(res);
+      });
       return () => {
         Voice.destroy().then(Voice.removeAllListeners);
       };
+
+      
     }, []);
 
     return (
-      // <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-      //   <Text>Personal AI Assistant</Text>
-      // </View>
       <View style={styles.container}>
         <SafeAreaView style={{
             flex: 1,
+            borderWidth: 0,
+            maxHeight: 400
           }}>
           <Text style={styles.headingText}>Voice to Text Recognition</Text>
           <View style={styles.textInputStyle}>
@@ -128,7 +136,8 @@ function PersonalAIAssistant(): JSX.Element {
           </View>
         </SafeAreaView>
         <View><Text>&nbsp;</Text></View>
-        <View style={styles.bottoms}>
+        {voiceAvailable ?
+        (<View style={styles.bottoms}>
             {isLoading ? (
                 <ActivityIndicator size="large" color="black" />
               ) : (
@@ -139,7 +148,7 @@ function PersonalAIAssistant(): JSX.Element {
               <TouchableOpacity style={styles.stop} onPress={stopRecording}>
                 <Text style={{color: 'white', fontWeight: 'bold'}}>Stop</Text>
               </TouchableOpacity>
-        </View>
+        </View>) : null }
       </View>
     );
 }

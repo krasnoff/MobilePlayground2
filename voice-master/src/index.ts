@@ -60,7 +60,7 @@ class RCTVoice {
             this._listeners.map(listener => listener.remove());
             this._listeners = null;
           }
-          resolve();
+          resolve(null);
         }
       });
     });
@@ -78,7 +78,7 @@ class RCTVoice {
         if (error) {
           reject(new Error(error));
         } else {
-          resolve();
+          resolve(null);
         }
       };
       if (Platform.OS === 'android') {
@@ -105,11 +105,11 @@ class RCTVoice {
       return Promise.resolve();
     }
     return new Promise((resolve, reject) => {
-      Voice.stopSpeech(error => {
+      Voice.stopSpeech((error: any) => {
         if (error) {
           reject(new Error(error));
         } else {
-          resolve();
+          resolve(null);
         }
       });
     });
@@ -119,11 +119,11 @@ class RCTVoice {
       return Promise.resolve();
     }
     return new Promise((resolve, reject) => {
-      Voice.cancelSpeech(error => {
+      Voice.cancelSpeech((error: any) => {
         if (error) {
           reject(new Error(error));
         } else {
-          resolve();
+          resolve(null);
         }
       });
     });

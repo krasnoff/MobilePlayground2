@@ -21,7 +21,6 @@ import {
 import HomeScreen from './pages/homescreen/HomeScreen';
 import DetailsScreen from './pages/details-screen/DetailedScreen';
 import MainMenu from './pages/main-menu/MainMenu';
-import PersonalAIAssistant from './pages/personal-ai-assistant/PersonalAIAssistant';
 
 type SectionProps = PropsWithChildren<{
   title: string;
@@ -71,9 +70,7 @@ function App(): JSX.Element {
         <Stack.Screen name="Details" component={DetailsScreen} options={{
           presentation: 'card'
         }} />
-        <Stack.Screen name="PersonalAIAssistant" component={PersonalAIAssistant} options={{
-          presentation: 'card'
-        }} />
+        
         <Stack.Screen name="MainMenu" component={MainMenu} options={{
           presentation: 'modal',
           animation: 'slide_from_bottom',

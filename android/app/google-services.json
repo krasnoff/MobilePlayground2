@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "359776536144",
+    "project_id": "mobileplayground-b002b",
+    "storage_bucket": "mobileplayground-b002b.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:359776536144:android:ffe5850fdaa51572c6f355",
+        "android_client_info": {
+          "package_name": "com.mobileplayground2"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyArCQ9iLoPvAbHL3A9kBko3DGVjWUBnZ9c"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

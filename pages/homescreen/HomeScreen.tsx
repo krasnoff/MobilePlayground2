@@ -5,7 +5,7 @@
  * @format
  */
 
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   Alert,
   Button,
@@ -19,7 +19,8 @@ import {
 } from 'react-native';
 import { Colors } from 'react-native/Libraries/NewAppScreen';
 import { FAB } from '@rneui/themed';
-import Icon from '../../assets/icons/icon'
+import Icon from '../../assets/icons/icon';
+import crashlytics from '@react-native-firebase/crashlytics';
 
 
 function HomeScreen({ navigation }: any): JSX.Element {
@@ -35,6 +36,10 @@ function HomeScreen({ navigation }: any): JSX.Element {
     console.log('fabClickHandler');
     Alert.alert('You tapped the button!');
   }
+
+  useEffect(() => {
+    crashlytics().log('App mounted.');
+  }, []);
 
   return (
     <SafeAreaView style={{

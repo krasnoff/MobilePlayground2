@@ -21,6 +21,7 @@ import {
 import HomeScreen from './pages/homescreen/HomeScreen';
 import DetailsScreen from './pages/details-screen/DetailedScreen';
 import MainMenu from './pages/main-menu/MainMenu';
+import ChatScreen from './pages/chat-screen/ChatScreen';
 
 type SectionProps = PropsWithChildren<{
   title: string;
@@ -70,7 +71,9 @@ function App(): JSX.Element {
         <Stack.Screen name="Details" component={DetailsScreen} options={{
           presentation: 'card'
         }} />
-        
+        <Stack.Screen name="ChatScreen" component={ChatScreen} options={{
+          presentation: 'card'
+        }} />
         <Stack.Screen name="MainMenu" component={MainMenu} options={{
           presentation: 'modal',
           animation: 'slide_from_bottom',

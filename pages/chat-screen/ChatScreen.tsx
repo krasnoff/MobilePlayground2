@@ -65,9 +65,16 @@ export default function ChatScreen() {
                     inverted={true}
                     contentContainerStyle={{ flexDirection: 'column-reverse' }}
                     renderItem={({ item }) => (
-                    <View style={item.role === Roles.USER ? styles.userMessage : styles.contactMessage}>
-                        <Text>{item.content}</Text>
-                    </View>
+                    (item.role !== Roles.REDIRECT ? 
+                        <View style={item.role === Roles.USER ? styles.userMessage : styles.contactMessage}>
+                            <Text>{item.content}</Text>
+                        </View> : 
+                        <View style={styles.contactMessage}>
+                            <Text>למעבר לעמוד פעולה לחץ כאן</Text>
+                            <Button
+                                title="עבור"
+                            />
+                        </View>)
                     )}
                 />
             </SafeAreaView>

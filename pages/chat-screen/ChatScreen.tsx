@@ -4,8 +4,9 @@ import { View, TextInput, Button, StyleSheet, Alert, Text, FlatList, SafeAreaVie
 import { useErrorTrace } from '../../hooks/useErrorTrace';
 import {BASE_ADDRESS} from "@env"
 import { MessageObj, Roles } from '../../interfaces/openAI';
+import { returnMenu } from './returnMenu';
 
-export default function ChatScreen() {
+export default function ChatScreen({ navigation }: any) {
     const [text, setText] = useState<string>('');
     const { setError } = useErrorTrace();
     const [ messagesArr, setMessagesArr ] = useState<MessageObj[]>([]);
@@ -22,7 +23,8 @@ export default function ChatScreen() {
     const fetchData = (text: string) => {
         addMessageElement({
             role: Roles.USER,
-            content: text
+            content: text,
+            function_call: null
         });
     };
 
@@ -47,13 +49,27 @@ export default function ChatScreen() {
     } 
 
     const setData = (data: any) => {
-        console.log('data response', data);
+        // console.log('data response', data);
         const message: MessageObj = data.data.message;
         if (message.content) {
             addMessageElement(message);
         } else {
-            Alert.alert('Alert Title', data.toString());
+            if (message.function_call) {
+                let newMessageElement: MessageObj = {
+                    role: Roles.REDIRECT,
+                    content: 'למעבר ל' + getServiceDescription(message.function_call.arguments.bankService) + ' לחץ כאן',
+                    function_call: message.function_call
+                }
+                addMessageElement(newMessageElement);
+                console.log('function response', JSON.stringify(message.function_call));
+            }
         }
+    }
+
+    const getServiceDescription = (bankService: string) => {
+        const servicesArr = returnMenu();
+        const res = servicesArr.find(el => el.id === bankService);
+        return res?.description;
     }
 
     return (
@@ -70,9 +86,10 @@ export default function ChatScreen() {
                             <Text>{item.content}</Text>
                         </View> : 
                         <View style={styles.contactMessage}>
-                            <Text>למעבר לעמוד פעולה לחץ כאן</Text>
+                            <Text>{item.content}</Text>
                             <Button
                                 title="עבור"
+                                onPress={() => navigation.navigate('SamplePage', item.function_call.arguments)}
                             />
                         </View>)
                     )}

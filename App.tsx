@@ -22,6 +22,7 @@ import HomeScreen from './pages/homescreen/HomeScreen';
 import DetailsScreen from './pages/details-screen/DetailedScreen';
 import MainMenu from './pages/main-menu/MainMenu';
 import ChatScreen from './pages/chat-screen/ChatScreen';
+import SamplePage from './pages/sample-page/SamplePage';
 
 type SectionProps = PropsWithChildren<{
   title: string;
@@ -72,6 +73,9 @@ function App(): JSX.Element {
           presentation: 'card'
         }} />
         <Stack.Screen name="ChatScreen" component={ChatScreen} options={{
+          presentation: 'card'
+        }} />
+        <Stack.Screen name="SamplePage" component={SamplePage} options={{
           presentation: 'card'
         }} />
         <Stack.Screen name="MainMenu" component={MainMenu} options={{

@@ -7,10 +7,12 @@ export enum Roles {
 
 export interface MessageObj {
     role: Roles,
-    content: string
+    content: string,
+    function_call: any
 }
 
 export interface MenuObj {
     id: string,
-    description: string
+    description: string,
+    redirectTo: string
 }

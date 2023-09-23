@@ -5,6 +5,7 @@ import { useErrorTrace } from '../../hooks/useErrorTrace';
 import {BASE_ADDRESS} from "@env"
 import { MessageObj, Roles } from '../../interfaces/openAI';
 import { returnMenu } from './returnMenu';
+import Tts from 'react-native-tts';
 
 export default function ChatScreen({ navigation }: any) {
     const [text, setText] = useState<string>('');
@@ -53,6 +54,7 @@ export default function ChatScreen({ navigation }: any) {
         const message: MessageObj = data.data.message;
         if (message.content) {
             addMessageElement(message);
+            Tts.speak(message.content);
         } else {
             if (message.function_call) {
                 let newMessageElement: MessageObj = {
@@ -61,6 +63,7 @@ export default function ChatScreen({ navigation }: any) {
                     function_call: message.function_call
                 }
                 addMessageElement(newMessageElement);
+                Tts.speak(newMessageElement.content);
                 console.log('function response', JSON.stringify(message.function_call));
             }
         }
@@ -71,6 +74,11 @@ export default function ChatScreen({ navigation }: any) {
         const res = servicesArr.find(el => el.id === bankService);
         return res?.description;
     }
+
+    useEffect(() => {
+        Tts.speak('שלום עולם');
+        // Tts.voices().then(voices => console.log(voices));
+    }, []);
 
     return (
         <View style={styles.container}>

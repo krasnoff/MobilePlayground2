@@ -6,7 +6,7 @@
  */
 
 import { NavigationContainer } from '@react-navigation/native';
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { createNativeStackNavigator, NativeStackNavigationOptions } from '@react-navigation/native-stack';
 import React from 'react';
 import type {PropsWithChildren} from 'react';
 import {
@@ -24,22 +24,35 @@ import MainMenu from './pages/main-menu/MainMenu';
 import ChatScreen from './pages/chat-screen/ChatScreen';
 import SamplePage from './pages/sample-page/SamplePage';
 
-type SectionProps = PropsWithChildren<{
+const Stack = createNativeStackNavigator();
+
+type Props = PropsWithChildren<{
   title: string;
 }>;
 
-const Stack = createNativeStackNavigator();
-
-function LogoTitle() {
+function LogoTitle(props: Props) {
   return (
     <View>
       <Text style={{ 
         fontFamily: 'Heebo-Bold', 
         fontSize: 20,
         color: '#ffffff'
-      }}>כותרת לדוגמה</Text>
+      }}>{props.title}</Text>
     </View>
   );
+}
+
+const customHeaderDesign: NativeStackNavigationOptions = {
+  // title: 'כותרת לדוגמה',
+  headerStyle: {
+    backgroundColor: '#f4511e',
+  },
+  headerTintColor: '#fff',
+  headerTitleStyle: {
+    fontWeight: 'bold',  
+  },
+  headerTitleAlign: "center",
+  headerShadowVisible: true,
 }
 
 function App(): JSX.Element {
@@ -51,32 +64,25 @@ function App(): JSX.Element {
 
   return (
     <NavigationContainer>
-      <Stack.Navigator initialRouteName="Home">
-      <Stack.Screen 
+      <Stack.Navigator initialRouteName="Home" screenOptions={customHeaderDesign}>
+        <Stack.Screen 
           name="Home" 
           component={HomeScreen} 
           options={{
-            // title: 'כותרת לדוגמה',
-            headerTitle: (() => <LogoTitle />),
-            headerStyle: {
-              backgroundColor: '#f4511e',
-            },
-            headerTintColor: '#fff',
-            headerTitleStyle: {
-              fontWeight: 'bold',  
-            },
-            headerTitleAlign: "center",
-            headerShadowVisible: true, 
+            headerTitle: (() => <LogoTitle title={'כותרת props'} />),
           }}
         />
         <Stack.Screen name="Details" component={DetailsScreen} options={{
-          presentation: 'card'
+          presentation: 'card',
+          headerTitle: (() => <LogoTitle title={'מסך פרטים'} />),
         }} />
         <Stack.Screen name="ChatScreen" component={ChatScreen} options={{
-          presentation: 'card'
+          presentation: 'card',
+          headerTitle: (() => <LogoTitle title={'מסך chat'} />),
         }} />
         <Stack.Screen name="SamplePage" component={SamplePage} options={{
-          presentation: 'card'
+          presentation: 'card',
+          headerTitle: (() => <LogoTitle title={'עמוד לדוגמה'} />),
         }} />
         <Stack.Screen name="MainMenu" component={MainMenu} options={{
           presentation: 'modal',

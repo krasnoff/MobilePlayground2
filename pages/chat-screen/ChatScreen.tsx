@@ -1,6 +1,6 @@
 import axios from 'axios';
-import React, { useEffect, useState } from 'react';
-import { View, TextInput, Button, StyleSheet, Alert, Text, FlatList, SafeAreaView } from 'react-native';
+import React, { useEffect, useRef, useState } from 'react';
+import { View, TextInput, Button, StyleSheet, Alert, Text, FlatList, SafeAreaView, DrawerLayoutAndroid } from 'react-native';
 import { useErrorTrace } from '../../hooks/useErrorTrace';
 import {BASE_ADDRESS} from "@env"
 import { MessageObj, Roles } from '../../interfaces/openAI';

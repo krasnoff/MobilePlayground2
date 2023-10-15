@@ -7,10 +7,15 @@
 
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator, NativeStackNavigationOptions } from '@react-navigation/native-stack';
-import React from 'react';
+import React, { useRef, useState } from 'react';
 import type {PropsWithChildren} from 'react';
 import {
+  Alert,
+  Button,
+  DrawerLayoutAndroid,
+  StyleSheet,
   Text,
+  TouchableOpacity,
   useColorScheme,
   View,
 } from 'react-native';
@@ -23,6 +28,7 @@ import DetailsScreen from './pages/details-screen/DetailedScreen';
 import MainMenu from './pages/main-menu/MainMenu';
 import ChatScreen from './pages/chat-screen/ChatScreen';
 import SamplePage from './pages/sample-page/SamplePage';
+import Icon from './assets/icons/icon';
 
 const Stack = createNativeStackNavigator();
 
@@ -58,41 +64,65 @@ const customHeaderDesign: NativeStackNavigationOptions = {
 function App(): JSX.Element {
   const isDarkMode = useColorScheme() === 'dark';
 
+  const drawer = useRef<DrawerLayoutAndroid>(null);
+
   const backgroundStyle = {
     backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
   };
 
+  const navigationView = () => (
+    <View>
+      <Text>I'm in the Drawer!</Text>
+      <Button
+        title="Close drawer"
+        onPress={() => drawer.current?.closeDrawer()}
+      />
+    </View>
+  );
+
   return (
-    <NavigationContainer>
-      <Stack.Navigator initialRouteName="Home" screenOptions={customHeaderDesign}>
-        <Stack.Screen 
-          name="Home" 
-          component={HomeScreen} 
-          options={{
-            headerTitle: (() => <LogoTitle title={'כותרת props'} />),
-          }}
-        />
-        <Stack.Screen name="Details" component={DetailsScreen} options={{
-          presentation: 'card',
-          headerTitle: (() => <LogoTitle title={'מסך פרטים'} />),
-        }} />
-        <Stack.Screen name="ChatScreen" component={ChatScreen} options={{
-          presentation: 'card',
-          headerTitle: (() => <LogoTitle title={'מסך chat'} />),
-        }} />
-        <Stack.Screen name="SamplePage" component={SamplePage} options={{
-          presentation: 'card',
-          headerTitle: (() => <LogoTitle title={'עמוד לדוגמה'} />),
-        }} />
-        <Stack.Screen name="MainMenu" component={MainMenu} options={{
-          presentation: 'modal',
-          animation: 'slide_from_bottom',
-          headerShown: false
-        }} />
-      </Stack.Navigator>
-    </NavigationContainer>
+    <DrawerLayoutAndroid
+        ref={drawer}
+        drawerWidth={300}
+        drawerPosition={'right'}
+        renderNavigationView={navigationView}>
+      <NavigationContainer>
+        <Stack.Navigator initialRouteName="Home" screenOptions={customHeaderDesign}>
+          <Stack.Screen 
+            name="Home" 
+            component={HomeScreen} 
+            options={{
+              headerTitle: (() => <LogoTitle title={'כותרת props'} />),
+            }}
+          />
+          <Stack.Screen name="Details" component={DetailsScreen} options={{
+            presentation: 'card',
+            headerTitle: (() => <LogoTitle title={'מסך פרטים'} />),
+          }} />
+          <Stack.Screen name="ChatScreen" component={ChatScreen} options={{
+            presentation: 'card',
+            headerTitle: (() => <LogoTitle title={'מסך chat'} />),
+            headerRight: () => (
+              <TouchableOpacity onPress={() => drawer.current?.openDrawer()}>
+                <Icon name="Menu" height="35" width="35" fill="#ffffff" />
+            </TouchableOpacity>
+            ),
+          }} />
+          <Stack.Screen name="SamplePage" component={SamplePage} options={{
+            presentation: 'card',
+            headerTitle: (() => <LogoTitle title={'עמוד לדוגמה'} />),
+          }} />
+          <Stack.Screen name="MainMenu" component={MainMenu} options={{
+            presentation: 'modal',
+            animation: 'slide_from_bottom',
+            headerShown: false
+          }} />
+        </Stack.Navigator>
+      </NavigationContainer>
+      
+    
+    </DrawerLayoutAndroid>
   );
 }
-
 
 export default App;
